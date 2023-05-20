@@ -23,6 +23,16 @@ camera.position.z = 2;
 
 // Create orbit controls
 let controls = new OrbitControls(camera, renderer.domElement);
+let autoRotate = true;
+
+// Event Listeners
+controls.addEventListener("start", function () {
+  autoRotate = false; // Stop rotation when user starts interacting
+});
+
+controls.addEventListener("end", function () {
+  autoRotate = true; // Starts rotation when user stop interacting
+});
 
 let jobs = [
   { title: "Software Developer", location: { lat: 37.7749, lon: -122.4194 } }, // San Francisco
@@ -47,7 +57,7 @@ jobs.forEach((job) => {
 // Animate the scene
 let animate = function () {
   requestAnimationFrame(animate);
-  earth.rotation.y += 0.0025;
+  if (autoRotate) earth.rotation.y += 0.002;
   controls.update();
   renderer.render(scene, camera);
 };
