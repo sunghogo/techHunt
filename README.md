@@ -2,6 +2,7 @@
 
 # Run this command from the root directory
 
+.\.venv\Scripts\activate
 flask --app app.py --debug run -p 8080
 
 # Attribution
