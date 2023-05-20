@@ -13,11 +13,21 @@
     />
   </head>
   <body>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="https://threejs.org/build/three.min.js"></script>
-    <script
-      type="module"
-      src="{{ url_for('static', filename='js/main.js') }}"
-    ></script>
+    <header>
+      <h1>Welcome</h1>
+    </header>
+
+    <main>
+      <canvas id="canvas-earth"></canvas>
+    </main>
+
+    <footer>
+      <p>techHunt</p>
+    </footer>
   </body>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script
+    type="module"
+    src="{{ url_for('static', filename='js/main.js') }}"
+  ></script>
 </html>

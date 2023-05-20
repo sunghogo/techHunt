@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+print("sneed")
 
 @app.route("/")
 def index():

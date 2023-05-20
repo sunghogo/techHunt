@@ -1,16 +1,25 @@
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "https://cdn.skypack.dev/three@0.132.2";
+import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls";
 
-const width = window.innerWidth;
-const height = window.innerHeight;
 const textureFilePath = "/static/img/earth-texture-2k.jpg";
+
+// DOM Selectors
+const canvas = document.querySelector("#canvas-earth");
+let canvasWidth = canvas.clientWidth;
+let canvasHeight = canvas.clientHeight;
 
 // Create a scene, a camera, and a renderer
 let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-let renderer = new THREE.WebGLRenderer();
+let camera = new THREE.PerspectiveCamera(
+  75,
+  canvasWidth / canvasHeight,
+  0.1,
+  1000
+);
+let renderer = new THREE.WebGLRenderer({ canvas: canvas });
 
-renderer.setSize(width, height);
-document.body.appendChild(renderer.domElement);
+renderer.setSize(canvasWidth, canvasHeight);
+// document.body.appendChild(renderer.domElement);
 
 // Create a sphere to represent the Earth
 let geometry = new THREE.SphereGeometry(1, 32, 32);
@@ -34,6 +43,17 @@ controls.addEventListener("end", function () {
   autoRotate = true; // Starts rotation when user stop interacting
 });
 
+window.addEventListener("resize", function () {
+  // Update the size of the renderer
+  canvasWidth = canvas.clientWidght;
+  canvasHeight = canvas.clientHeight;
+  renderer.setSize(canvasWidth, canvasHeight);
+
+  // Also update the aspect ratio of the camera
+  camera.aspect = canvasWidth / canvasHeight;
+  camera.updateProjectionMatrix();
+});
+
 let jobs = [
   { title: "Software Developer", location: { lat: 37.7749, lon: -122.4194 } }, // San Francisco
   { title: "Web Developer", location: { lat: 40.7128, lon: -74.006 } }, // New York
@@ -42,7 +62,7 @@ let jobs = [
 let projection = d3
   .geoOrthographic()
   .scale(200)
-  .translate([width / 2, height / 2])
+  .translate([canvasWidth / 2, canvasHeight / 2])
   .clipAngle(90);
 
 jobs.forEach((job) => {
