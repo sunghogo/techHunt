@@ -1,3 +1,5 @@
+import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
+
 const width = window.innerWidth;
 const height = window.innerHeight;
 const textureFilePath = "/static/img/earth-texture-2k.jpg";
@@ -18,6 +20,9 @@ let earth = new THREE.Mesh(geometry, material);
 scene.add(earth);
 
 camera.position.z = 2;
+
+// Create orbit controls
+let controls = new OrbitControls(camera, renderer.domElement);
 
 let jobs = [
   { title: "Software Developer", location: { lat: 37.7749, lon: -122.4194 } }, // San Francisco
@@ -42,7 +47,8 @@ jobs.forEach((job) => {
 // Animate the scene
 let animate = function () {
   requestAnimationFrame(animate);
-  earth.rotation.y += 0.001;
+  earth.rotation.y += 0.0025;
+  controls.update();
   renderer.render(scene, camera);
 };
 
